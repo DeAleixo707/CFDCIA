@@ -15,7 +15,7 @@
 
   <style>
     /* =====================================================
-       ROOT TOKENS & RESET (fornecido)
+       ROOT TOKENS & RESET
        ===================================================== */
     :root {
       --pink:       #FF008C;
@@ -108,23 +108,6 @@
     }
 
     /* =====================================================
-       GLOW BLOBS
-       ===================================================== */
-    .glow-blob {
-      position: absolute;
-      width: 420px;
-      height: 420px;
-      border-radius: 50%;
-      filter: blur(120px);
-      opacity: .06;
-      pointer-events: none;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    .left-blob  { left: -120px; background: var(--purple); }
-    .right-blob { right: -120px; background: var(--pink); }
-
-    /* =====================================================
        NAVBAR
        ===================================================== */
     .navbar {
@@ -163,9 +146,61 @@
     .btn-nav:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(255,0,140,.5); }
 
     /* =====================================================
+       TIMER NO CANTO SUPERIOR ESQUERDO (fixo)
+       ===================================================== */
+    .timer-corner {
+      position: fixed;
+      top: 76px;
+      left: 20px;
+      z-index: 999;
+      background: rgba(7,11,26,.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,0,140,.25);
+      border-radius: 10px;
+      padding: 8px 16px;
+      font-family: var(--ff-mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--cyan);
+      text-shadow: 0 0 14px var(--cyan);
+      box-shadow: 0 4px 24px rgba(0,0,0,.5);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+    }
+    .timer-corner .timer-label {
+      font-family: var(--ff-body);
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(255,255,255,.4);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-shadow: none;
+    }
+    .timer-corner .timer-icon {
+      color: var(--pink);
+      font-size: 15px;
+      animation: blink-timer 1.6s ease-in-out infinite;
+    }
+    .timer-corner .timer-digits {
+      letter-spacing: 1.5px;
+    }
+    .timer-corner .timer-sep {
+      color: rgba(255,255,255,.12);
+      margin: 0 2px;
+    }
+
+    @keyframes blink-timer {
+      0%,100%{opacity:1}
+      50%{opacity:.3}
+    }
+
+    /* =====================================================
        BUTTONS
        ===================================================== */
-    .btn-primary, .btn-final {
+    .btn-primary, .btn-final, .btn-section {
       display: inline-flex;
       align-items: center;
       gap: 12px;
@@ -191,8 +226,14 @@
       border-radius: 14px;
       box-shadow: 0 0 36px rgba(255,0,140,.45), 0 4px 22px rgba(0,0,0,.3);
     }
+    .btn-section {
+      padding: 14px 32px;
+      font-size: 15px;
+      box-shadow: 0 0 20px rgba(255,0,140,.3), 0 4px 14px rgba(0,0,0,.25);
+      margin-top: 20px;
+    }
 
-    .btn-primary::before, .btn-final::before {
+    .btn-primary::before, .btn-final::before, .btn-section::before {
       content: '';
       position: absolute;
       top: 0; left: -100%;
@@ -200,9 +241,9 @@
       background: linear-gradient(90deg, transparent, rgba(255,255,255,.14), transparent);
       transition: left .55s;
     }
-    .btn-primary:hover::before, .btn-final:hover::before { left: 100%; }
+    .btn-primary:hover::before, .btn-final:hover::before, .btn-section:hover::before { left: 100%; }
 
-    .btn-primary:hover, .btn-final:hover {
+    .btn-primary:hover, .btn-final:hover, .btn-section:hover {
       transform: translateY(-3px) scale(1.025);
       box-shadow: 0 0 52px rgba(255,0,140,.65), 0 10px 30px rgba(0,0,0,.35);
       animation: none;
@@ -218,7 +259,7 @@
        ===================================================== */
     .hero {
       min-height: 100vh;
-      padding: 120px 0 80px;
+      padding: 100px 0 80px;
       display: flex;
       align-items: center;
       position: relative;
@@ -268,10 +309,10 @@
       background: var(--cyan);
       border-radius: 50%;
       box-shadow: 0 0 6px var(--cyan);
-      animation: blink 1.6s ease-in-out infinite;
+      animation: blink-dot 1.6s ease-in-out infinite;
       flex-shrink: 0;
     }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
+    @keyframes blink-dot { 0%,100%{opacity:1} 50%{opacity:.25} }
 
     .hero-headline {
       font-family: var(--ff-head);
@@ -356,10 +397,10 @@
 
     .img-label {
       position: absolute;
-      top: 18px; right: 18px;
+      bottom: -8px; right: -8px;
       background: linear-gradient(135deg, var(--pink), var(--purple));
       color: var(--white);
-      padding: 5px 16px;
+      padding: 6px 18px;
       border-radius: 100px;
       font-family: var(--ff-mono);
       font-size: 11px;
@@ -367,6 +408,7 @@
       letter-spacing: 2.5px;
       box-shadow: 0 0 18px rgba(255,0,140,.5);
       z-index: 2;
+      border: 2px solid var(--dark);
     }
 
     .scroll-hint {
@@ -388,8 +430,8 @@
     }
 
     @keyframes float-anim {
-      0%,100%{transform:translateY(0)}
-      50%{transform:translateY(-18px)}
+      0%,100%{transform:translateY(0) rotate(0deg)}
+      50%{transform:translateY(-18px) rotate(1deg)}
     }
     .anim-float { animation: float-anim 4.5s ease-in-out infinite; }
 
@@ -507,9 +549,6 @@
       margin-bottom: 8px;
     }
     .aud-card p { font-size: 14px; color: rgba(255,255,255,.58); line-height: 1.65; }
-    .aud-cta { text-align: center; }
-    .aud-cta-txt { font-size: 17.5px; color: rgba(255,255,255,.78); margin-bottom: 28px; }
-    .aud-cta-txt strong { color: var(--white); }
 
     /* =====================================================
        BEFORE & AFTER
@@ -612,33 +651,6 @@
       margin-bottom: 10px;
     }
     .urg-card p { font-size: 14px; color: rgba(255,255,255,.62); line-height: 1.68; }
-
-    .counter-blk { text-align: center; position: relative; z-index: 1; }
-    .counter-lead {
-      font-family: var(--ff-head);
-      font-size: 21px; font-weight: 600;
-      color: rgba(255,255,255,.78);
-      margin-bottom: 38px;
-    }
-    .counters-row { display: flex; justify-content: center; gap: 72px; flex-wrap: wrap; }
-    .ctr-item { text-align: center; }
-    .ctr-val-wrap { display: flex; align-items: flex-end; justify-content: center; gap: 2px; }
-    .ctr-val {
-      font-family: var(--ff-mono);
-      font-size: 52px;
-      font-weight: 900;
-      color: var(--cyan);
-      text-shadow: 0 0 18px var(--cyan);
-      line-height: 1;
-    }
-    .ctr-sfx {
-      font-family: var(--ff-mono);
-      font-size: 36px;
-      color: var(--pink);
-      text-shadow: 0 0 16px var(--pink);
-      padding-bottom: 6px;
-    }
-    .ctr-item p { margin-top: 10px; font-size: 13px; color: rgba(255,255,255,.45); font-family: var(--ff-head); }
 
     /* =====================================================
        TESTIMONIALS
@@ -822,6 +834,14 @@
     .final-micro { margin-top: 18px; font-size: 12px; color: rgba(255,255,255,.36); }
 
     /* =====================================================
+       SECTION BOTTOM CTA WRAPPER
+       ===================================================== */
+    .section-bottom-cta {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    /* =====================================================
        FOOTER
        ===================================================== */
     .footer {
@@ -873,7 +893,7 @@
       .hero-cta { align-items: center; }
       .hero-checks { grid-template-columns: 1fr; justify-items: start; text-align: left; max-width: 260px; margin-left: auto; margin-right: auto; }
       .hero-badge { margin-left: auto; margin-right: auto; }
-      .img-frame { max-width: 300px; }
+      .img-frame { max-width: 280px; }
 
       .cards-grid    { grid-template-columns: 1fr; }
       .audience-grid { grid-template-columns: 1fr; }
@@ -884,10 +904,6 @@
       .ba-arrow  { justify-content: center; }
       .arrow-ring { transform: rotate(90deg); }
 
-      .counters-row { gap: 36px; }
-      .ctr-val { font-size: 40px; }
-      .ctr-sfx { font-size: 28px; }
-
       .guarantee-box { flex-direction: column; text-align: center; padding: 36px 24px; }
       .g-badges { justify-content: center; }
 
@@ -895,13 +911,45 @@
 
       .btn-primary { font-size: 15px; padding: 15px 28px; }
       .btn-final   { font-size: 16px; padding: 17px 28px; }
+      .btn-section { font-size: 14px; padding: 12px 24px; }
       .final-feats { gap: 14px; }
+
+      .timer-corner {
+        top: 68px;
+        left: 10px;
+        padding: 5px 12px;
+        font-size: 14px;
+        border-radius: 8px;
+        gap: 6px;
+      }
+      .timer-corner .timer-label {
+        font-size: 8px;
+      }
+      .timer-corner .timer-icon {
+        font-size: 12px;
+      }
     }
 
     @media (max-width: 480px) {
-      .hero { padding: 96px 0 56px; }
+      .hero { padding: 80px 0 56px; }
       .hero-headline { font-size: 28px; }
       .trust-row { gap: 20px; }
+
+      .timer-corner {
+        top: 60px;
+        left: 8px;
+        padding: 4px 10px;
+        font-size: 12px;
+        border-radius: 6px;
+        gap: 4px;
+      }
+      .timer-corner .timer-label {
+        display: none;
+      }
+      .timer-corner .timer-icon {
+        font-size: 10px;
+        margin-right: 2px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -914,6 +962,15 @@
   </style>
 </head>
 <body>
+
+<!-- ============================================================
+     TIMER NO CANTO SUPERIOR ESQUERDO (fixo)
+     ============================================================ -->
+<div class="timer-corner" id="timerCorner">
+  <span class="timer-icon"><i class="fas fa-clock"></i></span>
+  <span class="timer-label">Oferta</span>
+  <span class="timer-digits" id="timerDisplay">48:00:00</span>
+</div>
 
 <!-- ============================================================
      NAVBAR
@@ -960,8 +1017,8 @@
 
         <ul class="hero-checks reveal">
           <li><span class="chk">✓</span> 8 módulos práticos</li>
-          <li><span class="chk">✓</span> 120+ páginas</li>
-          <li><span class="chk">✓</span> 3 bónus exclusivos</li>
+          <li><span class="chk">✓</span> Plano de Ação</li>
+          <li><span class="chk">✓</span> Bónus exclusivos</li>
           <li><span class="chk">✓</span> 100% smartphone</li>
         </ul>
 
@@ -973,16 +1030,15 @@
         </div>
       </div>
 
-      <!-- Coluna direita: imagem -->
+      <!-- Coluna direita: capa do ebook (exatamente como no vhygf.png) -->
       <div class="hero-img-wrap anim-float reveal">
         <div class="img-glow"></div>
         <div class="img-frame">
-          <!-- =====================================================
-               IMAGEM DO EBOOK (substitua o src pelo seu arquivo)
-               ===================================================== -->
-          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='500' viewBox='0 0 400 500'%3E%3Crect width='400' height='500' fill='%23070B1A'/%3E%3Crect x='24' y='24' width='352' height='452' rx='24' fill='%230D1225' stroke='%238B5CF6' stroke-width='2'/%3E%3Ctext x='200' y='120' font-family='Space Grotesk' font-size='28' font-weight='700' text-anchor='middle' fill='%23FF008C'%3EGUIA%3C/text%3E%3Ctext x='200' y='170' font-family='Space Grotesk' font-size='28' font-weight='700' text-anchor='middle' fill='%23FFFFFF'%3EPRÁTICO%3C/text%3E%3Ctext x='200' y='240' font-family='Space Grotesk' font-size='22' font-weight='600' text-anchor='middle' fill='%238B5CF6'%3ECOMO USAR%3C/text%3E%3Ctext x='200' y='290' font-family='Space Grotesk' font-size='20' font-weight='700' text-anchor='middle' fill='%2300E5FF'%3EIA%3C/text%3E%3Ctext x='200' y='350' font-family='Space Grotesk' font-size='18' font-weight='600' text-anchor='middle' fill='%23FFFFFF'%3EMOÇAMBIQUE%3C/text%3E%3Ctext x='200' y='410' font-family='Inter' font-size='12' text-anchor='middle' fill='%23FFFFFF' opacity='0.5'%3E🌟 8 módulos · 120+ páginas%3C/text%3E%3C/svg%3E"
-               alt="Guia Prático IA Moçambique"
-               class="ebook-img">
+          <img src="vhygf.png"
+' width='400' height='530' viewBox='0 0 400 530'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23070B1A'/%3E%3Cstop offset='100%25' stop-color='%230D1225'/%3E%3C/linearGradient%3E%3ClinearGradient id='border' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%238B5CF6'/%3E%3Cstop offset='100%25' stop-color='%23FF008C'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='530' fill='url(%23bg)'/%3E%3Crect x='16' y='16' width='368' height='498' rx='24' fill='none' stroke='url(%23border)' stroke-width='2' opacity='0.5'/%3E%3Ctext x='200' y='75' font-family='Space Grotesk' font-size='14' font-weight='700' text-anchor='middle' fill='%23FF008C' letter-spacing='6'%3EGUIA%3C/text%3E%3Ctext x='200' y='130' font-family='Space Grotesk' font-size='34' font-weight='700' text-anchor='middle' fill='%23FFFFFF'%3EPRÁTICO%3C/text%3E%3Ctext x='200' y='195' font-family='Space Grotesk' font-size='22' font-weight='600' text-anchor='middle' fill='%238B5CF6'%3ECOMO USAR%3C/text%3E%3Ctext x='200' y='270' font-family='Space Grotesk' font-size='38' font-weight='900' text-anchor='middle' fill='%2300E5FF'%3EIA%3C/text%3E%3Ctext x='200' y='340' font-family='Space Grotesk' font-size='26' font-weight='700' text-anchor='middle' fill='%23FFFFFF'%3EMOÇAMBIQUE%3C/text%3E%3Cline x1='60' y1='370' x2='340' y2='370' stroke='%238B5CF6' stroke-width='1' opacity='0.2'/%3E%3Ctext x='200' y='405' font-family='Inter' font-size='11' text-anchor='middle' fill='%23FFFFFF' opacity='0.6'%3EAPRENDA FORMAS SIMPLES E MODERNAS%3C/text%3E%3Ctext x='200' y='428' font-family='Inter' font-size='11' text-anchor='middle' fill='%23FFFFFF' opacity='0.6'%3EDE GERAR RENDA USANDO FERRAMENTAS DE IA%3C/text%3E%3Ctext x='200' y='451' font-family='Inter' font-size='11' text-anchor='middle' fill='%23FFFFFF' opacity='0.6'%3EMESMO COMECANDO DO ZERO%3C/text%3E%3Ctext x='200' y='474' font-family='Inter' font-size='11' text-anchor='middle' fill='%23FFFFFF' opacity='0.6'%3EE APENAS COM UM SMARTPHONE%3C/text%3E%3Ctext x='200' y='505' font-family='Inter' font-size='14' font-weight='700' text-anchor='middle' fill='%2300E5FF' opacity='0.4'%3EAI%3C/text%3E%3C/svg%3E"
+               alt="Guia Prático IA Moçambique - Capa do Ebook"
+               class="ebook-img"
+               id="ebookCapa">
           <div class="img-label">📘 IA</div>
         </div>
       </div>
@@ -999,16 +1055,16 @@
   <div class="container trust-row">
     <div class="trust-item"><div class="trust-num">8</div><p>Módulos completos</p></div>
     <div class="trust-sep"></div>
-    <div class="trust-item"><div class="trust-num">120<span class="trust-plus">+</span></div><p>Páginas de conteúdo</p></div>
+    <div class="trust-item"><div class="trust-num">📋</div><p>Plano de Ação</p></div>
     <div class="trust-sep"></div>
-    <div class="trust-item"><div class="trust-num">3</div><p>Bónus exclusivos</p></div>
+    <div class="trust-item"><div class="trust-num">🎁</div><p>Bónus exclusivos</p></div>
     <div class="trust-sep"></div>
     <div class="trust-item"><div class="trust-num"><span style="font-size:28px;">📱</span></div><p>100% smartphone</p></div>
   </div>
 </section>
 
 <!-- ============================================================
-     SEÇÃO "PARA QUEM É ESTE GUIA"
+     SEÇÃO 1: "PARA QUEM É ESTE GUIA"
      ============================================================ -->
 <section class="section audience-sec" id="audiencia">
   <div class="container">
@@ -1041,9 +1097,8 @@
       </div>
     </div>
 
-    <div class="aud-cta reveal">
-      <p class="aud-cta-txt"><strong>Este guia é para si!</strong> Comece hoje mesmo a sua jornada.</p>
-      <a href="#" class="btn-primary" id="audCta">
+    <div class="section-bottom-cta reveal">
+      <a href="#" class="btn-section" id="audCta">
         <i class="fas fa-arrow-right"></i> Adquirir Ebook
       </a>
     </div>
@@ -1051,7 +1106,7 @@
 </section>
 
 <!-- ============================================================
-     SEÇÃO "O QUE VOCÊ VAI APRENDER"
+     SEÇÃO 2: "O QUE VOCÊ VAI APRENDER"
      ============================================================ -->
 <section class="section benefits-sec" id="conteudo">
   <div class="container">
@@ -1062,7 +1117,6 @@
     </div>
 
     <div class="ba-layout">
-      <!-- ANTES -->
       <div class="ba-box before-box reveal">
         <div class="ba-head before-head">
           <span>😓</span>
@@ -1076,13 +1130,11 @@
         </ul>
       </div>
 
-      <!-- SETA -->
       <div class="ba-arrow reveal">
         <div class="arrow-ring"><i class="fas fa-arrow-right"></i></div>
         <span class="arrow-label">TRANSFORMAÇÃO</span>
       </div>
 
-      <!-- DEPOIS -->
       <div class="ba-box after-box reveal">
         <div class="ba-head after-head">
           <span>🚀</span>
@@ -1097,33 +1149,32 @@
       </div>
     </div>
 
-    <!-- Tópicos detalhados -->
     <div style="margin-top: 60px;">
       <div class="cards-grid">
         <div class="card reveal">
-          <div class="card-ico">🤖</div>
-          <h3>ChatGPT e IAs generativas</h3>
-          <p>Aprenda a usar as principais ferramentas de IA para criar conteúdo, textos e estratégias que vendem no mercado moçambicano.</p>
+          <div class="card-ico">🎬</div>
+          <h3>Criação e Edição de Vídeos com IA</h3>
+          <p>Aprenda a criar e editar vídeos profissionais usando ferramentas de IA, mesmo sem experiência. Ideal para YouTube, TikTok e redes sociais.</p>
         </div>
         <div class="card reveal">
           <div class="card-ico">📊</div>
-          <h3>Marketing digital com IA</h3>
-          <p>Estratégias de marketing automatizado usando IA, adaptadas para o público e realidade de Moçambique.</p>
-        </div>
-        <div class="card reveal">
-          <div class="card-ico">⚡</div>
-          <h3>Automação inteligente</h3>
-          <p>Automatize tarefas repetitivas com IA, ganhe tempo e foque no que realmente importa para o seu negócio.</p>
+          <h3>Marketing com IA</h3>
+          <p>Estratégias de marketing digital automatizado usando IA, adaptadas para o público e realidade de Moçambique.</p>
         </div>
         <div class="card reveal">
           <div class="card-ico">📱</div>
-          <h3>Do smartphone à renda</h3>
-          <p>Pare de acreditar que precisa de computador. Tudo o que ensinamos funciona apenas com o seu telefone.</p>
+          <h3>Gestão de Redes Sociais</h3>
+          <p>Automatize a gestão das suas redes sociais com IA, crie conteúdo relevante e aumente o engajamento do seu público.</p>
         </div>
         <div class="card reveal">
-          <div class="card-ico">💰</div>
-          <h3>Produtos digitais com IA</h3>
-          <p>Crie ebooks, cursos e infoprodutos com auxílio da inteligência artificial, mesmo sem experiência.</p>
+          <div class="card-ico">✍️</div>
+          <h3>Criação e Edição de Conteúdos Digitais</h3>
+          <p>Domine a criação de conteúdos digitais como textos, imagens, vídeos e áudios com o auxílio da inteligência artificial.</p>
+        </div>
+        <div class="card reveal">
+          <div class="card-ico">🤖</div>
+          <h3>ChatGPT e IAs Generativas</h3>
+          <p>Aprenda a usar as principais ferramentas de IA para criar conteúdo, textos e estratégias que vendem no mercado moçambicano.</p>
         </div>
         <div class="card reveal">
           <div class="card-ico">📈</div>
@@ -1132,11 +1183,17 @@
         </div>
       </div>
     </div>
+
+    <div class="section-bottom-cta reveal">
+      <a href="#" class="btn-section" id="contentCta">
+        <i class="fas fa-arrow-right"></i> Adquirir Ebook
+      </a>
+    </div>
   </div>
 </section>
 
 <!-- ============================================================
-     URGÊNCIA + CONTADOR
+     SEÇÃO 3: "PORQUE ESPERAR PARA COMEÇAR?"
      ============================================================ -->
 <section class="section urgency-sec" id="urgencia">
   <div class="urgency-overlay"></div>
@@ -1169,33 +1226,16 @@
       </div>
     </div>
 
-    <!-- Contador -->
-    <div class="counter-blk reveal">
-      <p class="counter-lead"><i class="fas fa-clock" style="color:var(--pink);"></i> Ofertas limitadas · Aproveite agora!</p>
-      <div class="counters-row">
-        <div class="ctr-item">
-          <div class="ctr-val-wrap"><span class="ctr-val" id="ctr-days">00</span><span class="ctr-sfx">d</span></div>
-          <p>Dias</p>
-        </div>
-        <div class="ctr-item">
-          <div class="ctr-val-wrap"><span class="ctr-val" id="ctr-hours">00</span><span class="ctr-sfx">h</span></div>
-          <p>Horas</p>
-        </div>
-        <div class="ctr-item">
-          <div class="ctr-val-wrap"><span class="ctr-val" id="ctr-mins">00</span><span class="ctr-sfx">m</span></div>
-          <p>Minutos</p>
-        </div>
-        <div class="ctr-item">
-          <div class="ctr-val-wrap"><span class="ctr-val" id="ctr-secs">00</span><span class="ctr-sfx">s</span></div>
-          <p>Segundos</p>
-        </div>
-      </div>
+    <div class="section-bottom-cta reveal">
+      <a href="#" class="btn-section" id="urgencyCta">
+        <i class="fas fa-arrow-right"></i> Adquirir Ebook
+      </a>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     TESTEMUNHOS
+     SEÇÃO 4: DEPOIMENTOS
      ============================================================ -->
 <section class="section" id="depoimentos">
   <div class="container">
@@ -1240,6 +1280,12 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="section-bottom-cta reveal">
+      <a href="#" class="btn-section" id="testCta">
+        <i class="fas fa-arrow-right"></i> Adquirir Ebook
+      </a>
     </div>
   </div>
 </section>
@@ -1307,6 +1353,12 @@
         <div class="faq-a"><p>Após a compra, você recebe acesso imediato ao material em formato digital. Pode ler no seu smartphone ou computador.</p></div>
       </div>
     </div>
+
+    <div class="section-bottom-cta reveal">
+      <a href="#" class="btn-section" id="faqCta">
+        <i class="fas fa-arrow-right"></i> Adquirir Ebook
+      </a>
+    </div>
   </div>
 </section>
 
@@ -1333,8 +1385,8 @@
       </p>
       <div class="final-feats">
         <span><i class="fas fa-check-circle" style="color:var(--cyan);"></i> 8 módulos</span>
-        <span><i class="fas fa-check-circle" style="color:var(--cyan);"></i> 120+ páginas</span>
-        <span><i class="fas fa-check-circle" style="color:var(--cyan);"></i> 3 bónus</span>
+        <span><i class="fas fa-check-circle" style="color:var(--cyan);"></i> Plano de Ação</span>
+        <span><i class="fas fa-check-circle" style="color:var(--cyan);"></i> Bónus</span>
         <span><i class="fas fa-check-circle" style="color:var(--cyan);"></i> Smartphone</span>
       </div>
       <a href="#" class="btn-final" id="finalCta">
@@ -1381,7 +1433,7 @@
     // ============================================================
 
     // ===== 1) BOTÕES CTA =====
-    const ctaButtons = document.querySelectorAll('.btn-nav, .btn-primary, .btn-final');
+    const ctaButtons = document.querySelectorAll('.btn-nav, .btn-primary, .btn-final, .btn-section');
 
     ctaButtons.forEach(btn => {
       btn.addEventListener('click', function(e) {
@@ -1416,28 +1468,27 @@
       navbar.classList.toggle('scrolled', window.scrollY > 60);
     });
 
-    // ===== 4) CONTADOR REGRESSIVO (7 dias) =====
+    // ===== 4) TIMER NO CANTO SUPERIOR ESQUERDO (48 HORAS) =====
     const target = new Date();
-    target.setDate(target.getDate() + 7);
-    target.setHours(23, 59, 59, 0);
+    target.setHours(target.getHours() + 48);
 
-    function updateCounter() {
+    function updateTimer() {
       const now = new Date();
       const diff = Math.max(0, target - now);
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const hours = Math.floor(diff / (1000 * 60 * 60));
       const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const secs = Math.floor((diff % (1000 * 60)) / 1000);
 
-      document.getElementById('ctr-days').textContent = String(days).padStart(2, '0');
-      document.getElementById('ctr-hours').textContent = String(hours).padStart(2, '0');
-      document.getElementById('ctr-mins').textContent = String(mins).padStart(2, '0');
-      document.getElementById('ctr-secs').textContent = String(secs).padStart(2, '0');
+      const display = document.getElementById('timerDisplay');
+      display.textContent = 
+        String(hours).padStart(2, '0') + ':' +
+        String(mins).padStart(2, '0') + ':' +
+        String(secs).padStart(2, '0');
     }
 
-    updateCounter();
-    setInterval(updateCounter, 1000);
+    updateTimer();
+    setInterval(updateTimer, 1000);
 
     // ===== 5) FAQ ACCORDION =====
     const faqItems = document.querySelectorAll('.faq-item');
@@ -1445,7 +1496,6 @@
       const btn = item.querySelector('.faq-q');
       btn.addEventListener('click', () => {
         const isOpen = item.classList.contains('open');
-        // Fecha todos
         faqItems.forEach(i => i.classList.remove('open'));
         if (!isOpen) item.classList.add('open');
       });
